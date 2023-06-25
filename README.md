@@ -24,6 +24,7 @@ There is also [the original implementation by the authors](https://github.com/Ag
 import stacklp
 import networkx as nx
 import numpy as np
+from scipy import sparse 
 
 # Load network
 A = sparse.csr_matrix(nx.adjacency_matrix(G = nx.karate_club_graph()))
