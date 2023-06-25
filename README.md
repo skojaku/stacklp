@@ -39,7 +39,15 @@ prob = model.predict(A, src_nodes, trg_nodes)
 
 # Get feature importance
 model.get_feature_importance()
+
+# Save the model 
+model.save("stacking_model.pickle")
+
+# Load the model 
+model = StackingLinkPredictionModel(filename = "stacking_model.pickle")
+
 ```
 
 The `.fit` function performs the model selection based on the cross validation. You can change the fraction of test edges and the number of validations. See [here](./stacklp/stacking_model.py) for the arguments of `StackingLinkPredictionModel`
+
 
