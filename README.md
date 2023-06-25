@@ -1,8 +1,4 @@
 # stacklp
-Stacking model for link prediction for networks. 
-
-
-# stacklp
 
 A Python implementation of the stacking model for link prediction proposed in [the following paper](https://www.pnas.org/doi/abs/10.1073/pnas.1914950117):
 ```
@@ -50,4 +46,27 @@ model = stacklp.StackingLinkPredictionModel(filename = "stacking_model.pickle")
 
 The `.fit` function performs the model selection based on the cross validation. You can change the fraction of test edges and the number of validations. See [here](./stacklp/stacking_model.py) for the arguments of `StackingLinkPredictionModel`
 
+# Installation
 
+Download the package and run 
+```bash
+pip install -e .
+```
+
+You also need to install the following packages:
+- python-igraph
+- numba
+- pandas
+- tqdm
+- graph_tool
+- scikit-learn
+- numpy
+- scipy
+
+which can be installed using conda by
+```bash
+conda install -c conda-forge scikit-learn graph_tool numpy numba scipy pandas tqdm -y
+```
+
+# Test
+The code is tested in Python 3.9. 
