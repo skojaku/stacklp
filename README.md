@@ -24,13 +24,13 @@ There is also [the original implementation by the authors](https://github.com/Ag
 import stacklp
 import networkx as nx
 import numpy as np
-from scipy import sparse 
+from scipy import sparse
 
 # Load network
 A = sparse.csr_matrix(nx.adjacency_matrix(G = nx.karate_club_graph()))
 
 # Create/Fit the model
-model = StackingLinkPredictionModel()
+model = stacklp.StackingLinkPredictionModel()
 model.fit(A)
 
 # Prediction
@@ -45,8 +45,7 @@ model.get_feature_importance()
 model.save("stacking_model.pickle")
 
 # Load the model 
-model = StackingLinkPredictionModel(filename = "stacking_model.pickle")
-
+model = stacklp.StackingLinkPredictionModel(filename = "stacking_model.pickle")
 ```
 
 The `.fit` function performs the model selection based on the cross validation. You can change the fraction of test edges and the number of validations. See [here](./stacklp/stacking_model.py) for the arguments of `StackingLinkPredictionModel`
