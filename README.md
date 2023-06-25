@@ -41,5 +41,5 @@ prob = model.predict(A, src_nodes, trg_nodes)
 model.get_feature_importance()
 ```
 
-The `.fit` function performs the model selection based on the cross validation. You can change the fraction of test edges and the number of validations. See [here](./staklp/stacking_model.py) for the arguments of `StackingLinkPredictionModel`
+The `.fit` function performs the model selection based on the cross validation. You can change the fraction of test edges and the number of validations. See [here](./stacklp/stacking_model.py) for the arguments of `StackingLinkPredictionModel`
 
