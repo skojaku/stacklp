@@ -21,7 +21,7 @@ class TestOptimalStacking(unittest.TestCase):
             val_edge_frac=0.2, negative_edge_sampler="uniform"
         )
 
-        model.fit(self.A, n_train_samples=1000)
+        model.fit(self.A)
         inds = np.array(
             list(
                 itertools.product(
