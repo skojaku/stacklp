@@ -2,7 +2,7 @@
 #  * @Author: Rachith Aiyappa
 #  * @Date: 2023-04-03 09:43:13
 #  * @Last Modified by:   Sadamori Kojaku
-#  * @Last Modified time: 2023-06-25 06:44:43
+#  * @Last Modified time: 2023-06-30 16:25:46
 #  */
 # %%
 from tqdm.auto import tqdm
@@ -48,7 +48,9 @@ class StackingLinkPredictionModel:
         filename=None,
         val_edge_frac=0.2,
         negative_edge_sampler="uniform",
-        **params
+        n_train_samples=10000,
+        n_cv=5,
+        **params,
     ):
         """
         Initialize a StackingModel object.
@@ -63,6 +65,10 @@ class StackingLinkPredictionModel:
             Type of the negative sampler. Available negative samples are ["uniform", "degreeBiased"].
             "uniform" samples the unconnected node pairs uniformly at random and is a faithful implementation of the original stacking model.
             "degreeBiased" samples unconnected node pairs with probability proportional to the product of the degrees of the nodes.
+        n_train_samples : int, optional (default=10000)
+            The number of samples used for training.
+        n_cv : int, optional (default=5)
+            The number of cross-validation folds.
         **params : dict, optional
             Additional parameters passed to the predictive model.
 
@@ -85,8 +91,10 @@ class StackingLinkPredictionModel:
         self.negative_edge_sampler = negative_edge_sampler
         self.pred_model = None
         self.var_names = None
+        self.n_cv = n_cv
+        self.n_train_samples = n_train_samples
 
-    def fit(self, network, n_depths=None, n_ests=None, n_train_samples=10000, n_cv=5):
+    def fit(self, network, n_depths=None, n_ests=None):
         """Fits the model and searches over hyperparameters.
 
         Parameters
@@ -97,10 +105,6 @@ class StackingLinkPredictionModel:
             The maximum depth of each decision tree in the random forest.
         n_ests : list of int, optional (default=None)
             The number of trees in the random forest.
-        n_train_samples : int, optional (default=10000)
-            The number of samples used for training.
-        n_cv : int, optional (default=5)
-            The number of cross-validation folds.
 
         Returns
         -------
@@ -116,7 +120,7 @@ class StackingLinkPredictionModel:
             n_ests = [25, 50, 100]
 
         datasets = self.generate_train_test_datasets(
-            network, n_cv=n_cv, n_train_samples=n_train_samples
+            network, n_cv=self.n_cv, n_train_samples=self.n_train_samples
         )
 
         # Create an empty list to store the cross-validation results
