@@ -8,10 +8,10 @@ Ghasemian, Amir, et al. "Stacking models for nearly optimal link prediction in c
 There is also [the original implementation by the authors](https://github.com/Aghasemian/OptimalLinkPrediction), and the implementation in this repository has several differences below:
 
 1. Some redundant variables are dropped for the sake of speed. These variables are:
-  - Load centrality, `load_cents` (due to a highly correlation to the betweenness centrality)
+  - Load centrality, `load_cents` (due to a high correlation to the betweenness centrality)
   - Variables based on the full SVD decomposition, `svd_edges`, `svd_edges_dot`,`svd_edges_mean` (since the full SVD decomposition recovers the given adjacency matrix!!).
 2. Train/Test data split.
-  - In the initial implementation by Aghasemian, the feature matrix, denoted as $X$, was computed using a provided network, without any held-out edges. Subsequently, this matrix was divided into separate train and test feature matrices to facilitate model selection. However, a potential concern with this approach is that the feature matrix $X$ is calculated using all edges in the given network, which means that the train features are based on the ground-truth links that are used for evaluating the mdoel. In other words, information about the ground-truth can *leak* to the train set.
+  - In the initial implementation by Aghasemian, the feature matrix, denoted as $X$, was computed from a provided network without the held-out edges. Then, this matrix was divided into separate train and test feature matrices to facilitate model selection. However, a potential concern with this approach is that the feature matrix $X$ is calculated using all edges in the given network, which means that the train features are based on the ground-truth links that are used for evaluating the mdoel.
   - To prevent this, in this implementation, the given network is split into test and train edges. Then, the feature matrix $X$ is computed based on the train edges. This way, the model only learns the given train edges, and is evaluated based on the unseen test edges.
 
 # Usage
