@@ -2,7 +2,7 @@
 #  * @Author: Rachith Aiyappa
 #  * @Date: 2023-04-03 09:43:13
 #  * @Last Modified by:   Sadamori Kojaku
-#  * @Last Modified time: 2023-06-30 18:27:21
+#  * @Last Modified time: 2023-07-01 09:41:46
 #  */
 # %%
 from tqdm.auto import tqdm
@@ -225,11 +225,12 @@ class StackingLinkPredictionModel:
                 ind = np.random.randint(0, X_train.shape[0], size=n_train_samples)
                 Y_train, X_train = Y_train[ind], X_train[ind, :]
             elif len(train_src) >= n_train_samples:
-                ind = np.random.randint(0, len(eval_trg), size=n_train_samples)
+                ind = np.random.randint(0, len(train_src), size=n_train_samples)
                 feature_dframe = calc_feature_set(
                     train_net, train_src[ind], train_trg[ind]
                 )
                 X_train = self.imputing_missing_values(feature_dframe.values)
+                Y_train = Y_train[ind]
             datasets.append({"train": (X_train, Y_train), "test": (X_eval, Y_eval)})
         return datasets
 
